@@ -1,103 +1,105 @@
 # Yunyun Syndrome · Save Editor
 
-Un editor de guardados con interfaz gráfica para **Yunyun Syndrome**. Descifra los
-archivos `save_global` y `save_slotN`, te deja editar tu progreso, canciones,
-teorías y desbloqueos, y los vuelve a cifrar para que el juego los lea.
+A GUI save editor for **Yunyun Syndrome**. It decrypts the `save_global` and
+`save_slotN` files, lets you edit your progress, songs, theories and unlocks,
+and re-encrypts them so the game can read them back.
 
-> ⚠️ **Aviso:** herramienta no oficial, sin relación con Alliance Arts. Edita tus
-> propios guardados bajo tu responsabilidad. Haz copias de seguridad (la app crea
-> una automáticamente en `backups/` cada vez que guardas).
+> ⚠️ **Disclaimer:** unofficial tool, not affiliated with Alliance Arts. Edit your
+> own saves at your own risk. Keep backups (the app makes one automatically in
+> `backups/` every time you save).
 
 ![Yunyun Save Editor](docs/screenshot.png)
 
-## Características
+## Features
 
-- 🔓 Descifra/cifra los saves (AES‑256‑CBC) automáticamente.
-- 🎚️ Pestaña **Progreso**: edita `DenpaPlayPoint` (la barra de denpa), parámetros y banderas.
-- 🎵 Pestaña **Canciones**: tabla editable con las puntuaciones de cada canción.
-- 🌳 Pestaña **Avanzado**: árbol con **todos** los campos del save; edita, añade y elimina cualquier valor.
-- ⚡ Acciones rápidas: completar todas las canciones, desbloquear todas, conseguir todas las teorías.
-- 💾 Copia de seguridad automática antes de cada guardado.
-- 🌍 Multi-idioma: **Español, English, 日本語** (selector en vivo; recuerda tu elección).
+- 🔓 Automatically decrypts/encrypts the saves (AES‑256‑CBC).
+- 🎚️ **Progress** tab: edit `DenpaPlayPoint` (the denpa bar), parameters and flags.
+- 🎵 **Songs** tab: editable table with each song's score (with real song titles).
+- 🧩 **Theories** tab: editable table of conspiracy theories (with real titles).
+- 🌳 **Advanced** tab: a tree with **every** field in the save; edit, add and delete any value.
+- ⚡ Quick actions: complete all songs, unlock all songs, get all theories.
+- 🎯 **Set denpa to %**: type a target % and it computes the exact `DenpaPlayPoint` for you.
+- 💾 Automatic backup before every save.
+- 🌍 Multi-language UI: **English, Español, 日本語** (live switch; remembers your choice).
 
-## Uso
+## Usage
 
-1. **Cierra el juego.**
-2. En Steam, desactiva la nube de este juego mientras editas:
-   *Biblioteca → clic derecho en Yunyun Syndrome → Propiedades → General →
-   desmarca «Mantener las partidas guardadas en Steam Cloud»* (si no, la nube
-   puede sobrescribir tus cambios).
-3. Abre **`YunyunSaveEditor.exe`**.
-4. Elige el archivo (`save_global` o un slot) y pulsa **Abrir / Recargar**.
-5. Edita lo que quieras y pulsa **Guardar en el juego**.
-6. Abre el juego y comprueba. ¿No es lo que querías? Repite.
+1. **Close the game.**
+2. In Steam, turn off the cloud for this game while editing:
+   *Library → right-click Yunyun Syndrome → Properties → General →
+   uncheck "Keep games saves in the Steam Cloud"* (otherwise the cloud may
+   overwrite your changes).
+3. Open **`YunyunSaveEditor.exe`**.
+4. Pick the file (`save_global` or a slot) and click **Open / Reload**.
+5. Edit whatever you want and click **Save to game**.
+6. Launch the game and check. Not what you wanted? Repeat.
 
-La carpeta de guardados se detecta sola en:
+The save folder is detected automatically at:
 `%USERPROFILE%\AppData\LocalLow\AllianceArts\Yunyun_Syndrome\player`
-(si no, usa **Cambiar carpeta…**).
+(otherwise use **Change folder…**).
 
-### Sobre el porcentaje de denpa
-El % de denpa **no** sale solo de `DenpaPlayPoint`, sino del **total**:
+### About the denpa percentage
+The denpa % does **not** come from `DenpaPlayPoint` alone, but from the **total**:
 
 ```
-total = DenpaPlayPoint + puntos de canciones + puntos de teorías + puntos de finales
+total = DenpaPlayPoint + song points + theory points + ending points
 ```
 
-(cada canción "perfecta" = 480 pts, cada final = 2.500 pts, las teorías según rareza).
-El editor calcula tu total y tu % actual, y el botón **«Aplicar %»** pone el
-`DenpaPlayPoint` exacto para alcanzar el % que pidas (teniendo en cuenta lo que ya
-aportan canciones, teorías y finales). Puntos totales de referencia:
+(each "perfect" song = 480 pts, each ending = 2,500 pts, theories depend on rarity).
+The editor computes your total and current %, and the **"Apply %"** button sets the
+exact `DenpaPlayPoint` needed to reach the % you ask for (accounting for what songs,
+theories and endings already contribute). Reference totals:
 
-| %  | puntos | %   | puntos  |
+| %  | points | %   | points  |
 |----|--------|-----|---------|
-| 10 | 5.800  | 70  | 85.100  |
-| 30 | 22.300 | 90  | 125.600 |
-| 50 | 49.600 | 100 | 150.600 |
+| 10 | 5,800  | 70  | 85,100  |
+| 30 | 22,300 | 90  | 125,600 |
+| 50 | 49,600 | 100 | 150,600 |
 
-Los nombres reales de las canciones y la tabla de denpa se extrajeron de los datos
-del propio juego (master data y tablas de localización).
+The real song/theory names and the denpa table were extracted from the game's own
+data (master data and localization tables).
 
-## Descargar
+## Download
 
-Descarga `YunyunSaveEditor.exe` desde la sección **Releases**. Es un único
-ejecutable autocontenido: no necesitas instalar .NET ni nada más (Windows x64).
+Grab `YunyunSaveEditor.exe` from the **Releases** section. It's a single
+self-contained executable: no need to install .NET or anything else (Windows x64).
 
-## Compilar desde el código
+## Build from source
 
-Requiere el SDK de **.NET 9**.
+Requires the **.NET 9** SDK.
 
 ```bash
-dotnet build                       # compilación de desarrollo
-# Ejecutable único autocontenido (no requiere .NET instalado):
+dotnet build                       # development build
+# Single-file, self-contained executable (no .NET needed to run):
 dotnet publish -c Release -r win-x64 --self-contained true \
   -p:PublishSingleFile=true \
   -p:IncludeNativeLibrariesForSelfExtract=true \
   -p:EnableCompressionInSingleFile=true
 # -> bin/Release/net9.0-windows/win-x64/publish/YunyunSaveEditor.exe
-# (IncludeNativeLibrariesForSelfExtract es OBLIGATORIO en WPF single-file,
-#  si no, falla con System.DllNotFoundException al arrancar.)
+# (IncludeNativeLibrariesForSelfExtract is REQUIRED for a WPF single-file build,
+#  otherwise it crashes at startup with System.DllNotFoundException.)
 ```
 
-## Formato del guardado (notas técnicas)
+## Save format (technical notes)
 
-- Cifrado: **AES‑256‑CBC + PKCS7**. El **IV son los primeros 16 bytes** del archivo;
-  el resto es el texto cifrado. El contenido es **JSON UTF‑8** (sin BOM).
-- `save_global`: colección y progreso (`DenpaPlayPoint`, `ScoreRecords`,
+- Encryption: **AES‑256‑CBC + PKCS7**. The **IV is the first 16 bytes** of the file;
+  the rest is the ciphertext. The content is **UTF‑8 JSON** (no BOM).
+- `save_global`: collection and progress (`DenpaPlayPoint`, `ScoreRecords`,
   `ConspiracyTheory`, `SongUnlockDatas`, `PictureUnlockDatas`, `EndingData`…).
-- `save_slotN`: progreso de historia (`Episode`, `FlagData`, …).
+- `save_slotN`: story progress (`Episode`, `FlagData`, …).
 
-## Traducciones / Idiomas
+## Translations / Languages
 
-La interfaz está localizada (Español, English, 日本語). Cámbialo con el selector
-de la esquina superior derecha; tu elección se guarda en `language.txt`.
+The UI is localized (English, Español, 日本語). Switch it with the selector in the
+top-right corner; your choice is saved to `language.txt`.
 
-**Añadir un idioma** (¡se agradecen PRs!): en [`Loc.cs`](Loc.cs)
-1. Añade el código a `Loc.Available`, p. ej. `("fr", "Français")`.
-2. Copia el diccionario `["en"] = new() { ... }` como `["fr"] = new() { ... }`
-   y traduce los valores (deja las **claves** igual).
+**Add a language** (PRs welcome!): in [`Loc.cs`](Loc.cs)
+1. Add the code to `Loc.Available`, e.g. `("fr", "Français")`.
+2. Copy the `["en"] = new() { ... }` dictionary as `["fr"] = new() { ... }`
+   and translate the values (keep the **keys** unchanged).
 
-Todos los textos de la app salen de ahí, así que no hace falta tocar nada más.
+Every string in the app comes from there, so nothing else needs changing.
 
-## Licencia
+## License
 
-MIT. Ver [LICENSE](LICENSE).
+MIT. See [LICENSE](LICENSE).
