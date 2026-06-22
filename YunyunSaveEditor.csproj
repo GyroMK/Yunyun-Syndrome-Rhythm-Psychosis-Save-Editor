@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net9.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <AssemblyName>YunyunSaveEditor</AssemblyName>
+    <RootNamespace>YunyunSaveEditor</RootNamespace>
+    <Version>1.0.0</Version>
+    <Authors>Yunyun Save Editor contributors</Authors>
+    <Product>Yunyun Syndrome Save Editor</Product>
+    <Description>Editor de guardados para Yunyun Syndrome: descifra, edita y vuelve a cifrar los save.</Description>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+
+</Project>

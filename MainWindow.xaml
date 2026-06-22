@@ -1,0 +1,189 @@
+<Window x:Class="YunyunSaveEditor.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:loc="clr-namespace:YunyunSaveEditor"
+        Title="{loc:Tr window_title}" Height="760" Width="1000"
+        MinHeight="620" MinWidth="880"
+        WindowStartupLocation="CenterScreen"
+        FontFamily="Segoe UI" FontSize="13"
+        Background="{StaticResource Bg}" Foreground="{StaticResource Ink}">
+    <DockPanel>
+        <!-- Header -->
+        <Border DockPanel.Dock="Top" Height="74" Background="{StaticResource Accent}">
+            <StackPanel VerticalAlignment="Center" Margin="22,0">
+                <TextBlock Text="Yunyun Syndrome  ·  Save Editor" Foreground="White" FontSize="20" FontWeight="SemiBold"/>
+                <TextBlock Text="{loc:Tr header_subtitle}"
+                           Foreground="#EDEBFF" FontSize="12" Margin="0,2,0,0"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Toolbar -->
+        <Border DockPanel.Dock="Top" Background="White" BorderBrush="#E6E8EF" BorderThickness="0,0,0,1">
+            <DockPanel Margin="16,12">
+                <!-- Selector de idioma (derecha) -->
+                <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                    <TextBlock Text="{loc:Tr lbl_lang}" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                    <ComboBox x:Name="cmbLang" Width="120" Height="30" VerticalContentAlignment="Center"
+                              SelectionChanged="cmbLang_SelectionChanged"/>
+                </StackPanel>
+                <!-- Controles de archivo (izquierda) -->
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{loc:Tr lbl_file}" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                    <ComboBox x:Name="cmbFile" Width="180" Height="30" VerticalContentAlignment="Center"/>
+                    <Button x:Name="btnOpen" Content="{loc:Tr btn_open}" Style="{StaticResource GrayButton}" Margin="10,0,8,0" Click="btnOpen_Click"/>
+                    <Button x:Name="btnSave" Content="{loc:Tr btn_save}" Style="{StaticResource GreenButton}" Click="btnSave_Click"/>
+                    <Button x:Name="btnFolder" Content="{loc:Tr btn_folder}" Style="{StaticResource GrayButton}" Margin="8,0,0,0" Click="btnFolder_Click"/>
+                </StackPanel>
+            </DockPanel>
+        </Border>
+
+        <!-- Status bar -->
+        <Border DockPanel.Dock="Bottom" Height="30" Background="#DFE6E9">
+            <TextBlock x:Name="lblStatus" VerticalAlignment="Center" Margin="12,0"
+                       Text="{loc:Tr status_ready}"/>
+        </Border>
+
+        <!-- Tabs -->
+        <TabControl x:Name="tabs" Margin="12" Background="Transparent" BorderThickness="0"
+                    SelectionChanged="tabs_SelectionChanged">
+
+            <!-- PROGRESO -->
+            <TabItem Header="{loc:Tr tab_progress}">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="2,12,2,2">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="320"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0" Margin="0,0,14,0">
+                            <Border Style="{StaticResource Card}">
+                                <StackPanel>
+                                    <TextBlock Text="{loc:Tr card_denpa_title}" Style="{StaticResource SectionTitle}"/>
+                                    <TextBlock x:Name="lblDenpaNow" Text="" FontWeight="SemiBold" Foreground="{StaticResource Accent}" Margin="0,0,0,4"/>
+                                    <TextBlock TextWrapping="Wrap" Foreground="#636E72"
+                                               Text="{loc:Tr card_denpa_desc}"/>
+                                    <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                                        <TextBlock Text="{loc:Tr lbl_denpa_pct}" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                                        <TextBox x:Name="txtDenpaPct" Width="55" Height="30" Text="90"/>
+                                        <Button Content="{loc:Tr btn_denpa_pct}" Style="{StaticResource PillButton}" Margin="8,0,0,0" Click="btnDenpaPct_Click"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                                        <TextBlock Text="DenpaPlayPoint:" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                                        <TextBox x:Name="txtDenpa" Width="150" Height="30" FontWeight="SemiBold"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Style="{StaticResource Card}">
+                                <StackPanel>
+                                    <TextBlock Text="{loc:Tr card_quick_title}" Style="{StaticResource SectionTitle}"/>
+                                    <WrapPanel>
+                                        <Button x:Name="btnSongsClear" Content="{loc:Tr btn_songs_clear}" Style="{StaticResource PillButton}" Margin="0,0,8,8" Click="btnSongsClear_Click"/>
+                                        <Button x:Name="btnSongsUnlock" Content="{loc:Tr btn_songs_unlock}" Style="{StaticResource PillButton}" Margin="0,0,8,8" Click="btnSongsUnlock_Click"/>
+                                        <Button x:Name="btnTheories" Content="{loc:Tr btn_theories}" Style="{StaticResource PillButton}" Margin="0,0,8,8" Click="btnTheories_Click"/>
+                                    </WrapPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+                                        <TextBlock Text="{loc:Tr lbl_rank}" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                                        <TextBox x:Name="txtRank" Width="50" Height="28" Text="1"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Style="{StaticResource Card}">
+                                <StackPanel>
+                                    <TextBlock Text="{loc:Tr card_params_title}" Style="{StaticResource SectionTitle}"/>
+                                    <UniformGrid x:Name="paramGrid" Columns="3"/>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+
+                        <Border Grid.Column="1" Style="{StaticResource Card}" VerticalAlignment="Top">
+                            <StackPanel>
+                                <TextBlock Text="{loc:Tr card_flags_title}" Style="{StaticResource SectionTitle}"/>
+                                <StackPanel x:Name="flagsPanel"/>
+                                <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                                    <TextBlock Text="{loc:Tr lbl_follower}" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                                    <TextBox x:Name="txtFollower" Width="90" Height="28"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- CANCIONES -->
+            <TabItem Header="{loc:Tr tab_songs}">
+                <DockPanel Margin="0,10,0,0">
+                    <TextBlock DockPanel.Dock="Bottom" Foreground="#636E72" Margin="2,6,0,0"
+                               Text="{loc:Tr songs_hint}"/>
+                    <DataGrid x:Name="gridSongs" AutoGenerateColumns="False" CanUserAddRows="False"
+                              CanUserDeleteRows="False" HeadersVisibility="Column" GridLinesVisibility="Horizontal"
+                              RowBackground="White" AlternatingRowBackground="#F4F2FF" BorderThickness="1" BorderBrush="#E6E8EF">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="{loc:Tr col_title}" Binding="{Binding Title}" IsReadOnly="True" Width="240"/>
+                            <DataGridTextColumn Header="{loc:Tr col_song}" Binding="{Binding Name}" IsReadOnly="True" Width="180"/>
+                            <DataGridTextColumn Header="{loc:Tr col_level}" Binding="{Binding Level}" Width="70"/>
+                            <DataGridTextColumn Header="{loc:Tr col_points}" Binding="{Binding Point}" Width="110"/>
+                            <DataGridTextColumn Header="{loc:Tr col_combo}" Binding="{Binding Combo}" Width="80"/>
+                            <DataGridCheckBoxColumn Header="{loc:Tr col_fullcombo}" Binding="{Binding FullCombo}" Width="90"/>
+                            <DataGridTextColumn Header="{loc:Tr col_rank}" Binding="{Binding Rank}" Width="70"/>
+                            <DataGridTextColumn Header="{loc:Tr col_rate}" Binding="{Binding Rate}" Width="80"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
+            </TabItem>
+
+            <!-- TEORÍAS -->
+            <TabItem Header="{loc:Tr tab_theories}">
+                <DockPanel Margin="0,10,0,0">
+                    <TextBlock DockPanel.Dock="Bottom" Foreground="#636E72" Margin="2,6,0,0"
+                               Text="{loc:Tr theories_hint}"/>
+                    <DataGrid x:Name="gridTheories" AutoGenerateColumns="False" CanUserAddRows="False"
+                              CanUserDeleteRows="False" HeadersVisibility="Column" GridLinesVisibility="Horizontal"
+                              RowBackground="White" AlternatingRowBackground="#F4F2FF" BorderThickness="1" BorderBrush="#E6E8EF">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="{loc:Tr col_no}" Binding="{Binding No}" IsReadOnly="True" Width="70"/>
+                            <DataGridTextColumn Header="{loc:Tr col_theory}" Binding="{Binding Title}" IsReadOnly="True" Width="*"/>
+                            <DataGridTextColumn Header="{loc:Tr col_getcount}" Binding="{Binding GetCount}" Width="130"/>
+                            <DataGridTextColumn Header="{loc:Tr col_checked}" Binding="{Binding CheckedGetCount}" Width="110"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
+            </TabItem>
+
+            <!-- AVANZADO -->
+            <TabItem Header="{loc:Tr tab_advanced}">
+                <Grid Margin="0,10,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="340"/>
+                    </Grid.ColumnDefinitions>
+                    <TreeView x:Name="tree" Grid.Column="0" FontFamily="Consolas" BorderBrush="#E6E8EF"
+                              SelectedItemChanged="tree_SelectedItemChanged"/>
+                    <Border Grid.Column="1" Style="{StaticResource Card}" Margin="14,0,0,0" VerticalAlignment="Top">
+                        <StackPanel>
+                            <TextBlock x:Name="lblPath" Text="{loc:Tr adv_select}" Style="{StaticResource SectionTitle}" TextWrapping="Wrap"/>
+                            <TextBlock Text="{loc:Tr lbl_type}" Margin="0,6,0,2"/>
+                            <ComboBox x:Name="cmbType" Height="28">
+                                <ComboBoxItem Tag="Texto" Content="{loc:Tr type_text}"/>
+                                <ComboBoxItem Tag="Número" Content="{loc:Tr type_number}"/>
+                                <ComboBoxItem Tag="Booleano" Content="{loc:Tr type_bool}"/>
+                                <ComboBoxItem Tag="Null" Content="{loc:Tr type_null}"/>
+                            </ComboBox>
+                            <TextBlock Text="{loc:Tr lbl_value}" Margin="0,8,0,2"/>
+                            <TextBox x:Name="txtValue" Height="80" AcceptsReturn="True" TextWrapping="Wrap"
+                                     VerticalScrollBarVisibility="Auto" FontFamily="Consolas"/>
+                            <Button x:Name="btnApply" Content="{loc:Tr btn_apply}" Style="{StaticResource GreenButton}" Margin="0,10,0,0" Click="btnApply_Click"/>
+                            <WrapPanel Margin="0,8,0,0">
+                                <Button x:Name="btnAddEl" Content="{loc:Tr btn_add_el}" Style="{StaticResource GrayButton}" Margin="0,0,8,8" Click="btnAddEl_Click"/>
+                                <Button x:Name="btnAddField" Content="{loc:Tr btn_add_field}" Style="{StaticResource GrayButton}" Margin="0,0,8,8" Click="btnAddField_Click"/>
+                                <Button x:Name="btnDelete" Content="{loc:Tr btn_delete}" Style="{StaticResource DangerButton}" Margin="0,0,0,8" Click="btnDelete_Click"/>
+                            </WrapPanel>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </DockPanel>
+</Window>

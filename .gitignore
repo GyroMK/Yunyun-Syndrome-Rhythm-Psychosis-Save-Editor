@@ -1,0 +1,17 @@
+# .NET build output
+bin/
+obj/
+
+# App-generated backups
+backups/
+**/backups/
+
+# Distributed binaries (publish via Releases instead)
+dist/
+
+# App-generated language preference
+language.txt
+
+# IDE
+.vs/
+*.user
